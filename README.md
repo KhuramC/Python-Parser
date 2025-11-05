@@ -17,3 +17,7 @@ TODO: embed video demo into README
 ## Team Members
 
 - Khuram Choudhry
+- Alon Barzilay
+- Pablo Lasarte
+- Hipolito Sanchez
+- Evan Schreiner
