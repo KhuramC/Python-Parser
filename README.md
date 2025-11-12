@@ -12,21 +12,21 @@ A basic Python 3.x Parser. TODO: Flesh out description
 
 ## Requirements & Setup
 
-This project is built using C++17, ANTLR 4, and the make build system. The following environment is required for building and running the parser. 
+This project is built using C++17, ANTLR 4, and the make build system. The following environment is required for building and running the parser.
 
 ### Environment
 
-* OS: Windows 10/11
-* Terminal: MSYS2 MINGW64
-* Compiler: g++ (C++17)
-* Build System: make
-* Java: A Java JDK (version 17 or newer) is required to run the ANTLR tool.
+- OS: Windows 10/11
+- Terminal: MSYS2 MINGW64
+- Compiler: g++ (C++17)
+- Build System: make
+- Java: A Java JDK (version 17 or newer) is required to run the ANTLR tool.
 
 ### Setup Steps
 
 **Install MSYS2:**
 
-Download and install MSYS2 from https://www.msys2.org/.
+Download and install MSYS2 from <https://www.msys2.org/>.
 
 Install it to the default location (C:\msys64).
 
@@ -44,7 +44,7 @@ pacman -S --needed mingw-w66-x86_64-toolchain base-devel
 
 **Install Java JDK:**
 
-Download a Windows x64 JDK (version 17 or newer) https://adoptium.net/temurin/releases/.
+Download a Windows x64 JDK (version 17 or newer) <https://adoptium.net/temurin/releases/>.
 
 Download the .zip file, not the .msi installer.
 
@@ -62,45 +62,43 @@ Restart your terminal and verify by running `java --version`.
 
 Clone the project, which includes the required ANTLR C++ runtime source code:
 
-```
+```bash
 git clone https://github.com/KhuramC/Python-Parser.git
 ```
 
 This repository also includes the antlr-4.13.1-complete.jar tool, which is used by the Makefile.
 
-## How to Use/Run the Parser 
+## How to Use/Run the Parser
 
 All commands must be run from the MSYS2 MINGW 64-bit terminal in the root project directory.
 
 1. Build the Parser
 
-A Makefile is provided to handle all compilation.
-To build the parser for the first time (or after changing the grammar), run:
+    A Makefile is provided to handle all compilation.
+    To build the parser for the first time (or after changing the grammar), run:
 
-```bash
-make
-```
+    ```bash
+    make
+    ```
 
-This command will first run ANTLR to generate the parser files (placing them in the generated/ directory) and then compile all C++ source code into a single executable named my_parser.exe.
+    This command will first run ANTLR to generate the parser files (placing them in the generated/ directory) and then compile all C++ source code into a single executable named my_parser.exe.
 
-To clean build files, run:
+    To clean build files, run:
 
-```bash
-make clean
-```
+    ```bash
+    make clean
+    ```
 
 2. Run the Parser
 
-The parser reads Python code from standard input and prints the resulting parse tree to standard output.
+    The parser reads Python code from standard input and prints the resulting parse tree to standard output.
 
-The easiest way to run it is by redirecting a test file.
+    The easiest way to run it is by redirecting a test file.
 
-```bash
-./my_parser.exe < test.py
-```
+    ```bash
+    ./my_parser.exe < test.py
+    ```
 
 ## Demo
 
 TODO: embed video demo into README
-
-
