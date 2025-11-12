@@ -1,28 +1,13 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+# Ignore the executable file
+my_parser
+my_parser.exe
 
-src/generated/
+# Ignore all object files
+*.o
 
-venv/
-.env/
-.venv/
-ENV/
-env/
-*.egg-info/
+generated/
+*.zip
 
-.vscode/
-.idea/
-*.sublime-workspace
-*.sublime-project
-
+# Ignore OS specific files
 .DS_Store
 Thumbs.db
-
-# Output files
-output/
-*.txt
-
-*.bak
-*.swp
