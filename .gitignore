@@ -1,28 +1,9 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
-
-src/generated/
-
-venv/
-.env/
-.venv/
-ENV/
-env/
-*.egg-info/
-
+.antlr/
 .vscode/
-.idea/
-*.sublime-workspace
-*.sublime-project
-
-.DS_Store
-Thumbs.db
-
-# Output files
-output/
-*.txt
-
-*.bak
-*.swp
+*.interp
+*.tokens
+*Lexer.py
+*Listener.py
+*Parser.py
+*Visitor.py
