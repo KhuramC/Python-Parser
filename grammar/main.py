@@ -18,9 +18,9 @@ def main():
     tree = parser.start()
 
     if parser.getNumberOfSyntaxErrors() > 0:
-        print("Nonzero amounts of errors")
-        
-    print(tree.toStringTree(recog=parser)) # very unreadable, but it does print
+        print("Nonzero amounts of parsing errors")
+    else:
+        print(tree.toStringTree(recog=parser)) # very unreadable, but it does print
     
 
 if __name__ == "__main__":
