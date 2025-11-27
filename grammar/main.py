@@ -6,7 +6,8 @@ from PythonSubsetParser import PythonSubsetParser
 
 deliverable_path = Path("../deliverables")
 
-current_deliverable = deliverable_path / "project_deliverable_1.py"
+# current_deliverable = deliverable_path / "project_deliverable_1.py"
+current_deliverable = deliverable_path / "project_deliverable_2.py"
 
 def main():
 

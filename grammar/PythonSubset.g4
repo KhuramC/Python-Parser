@@ -8,20 +8,46 @@ grammar PythonSubset;
 
 start: program;
 
-program: statement (NEWLINE+ statement)* (NEWLINE+)? EOF;
+program: (NEWLINE)* statement (NEWLINE+ statement)* (NEWLINE+)? EOF;
 
-statement: assignment_statement;
+statement:
+    assignment_statement
+    | if_statement;
+
+// 		   Add (NEWLINE*) before ELIF and ELSE to allow
+//         them to be on different lines from the preceding block.
+if_statement:
+    IF expression COLON block
+    (NEWLINE* ELIF expression COLON block)*
+    (NEWLINE* ELSE COLON block)?;
+
+// Block rule expects a NEWLINE, then an INDENT token,
+// then one or more statements that are also prefixed by NEWLINE INDENT.
+block: NEWLINE INDENT statement (NEWLINE INDENT statement)*;
+
 
 assignment_statement:
-	ID (
-		ASSIGN
-		| ADD_ASSIGN
-		| SUB_ASSIGN
-		| MUL_ASSIGN
-		| DIV_ASSIGN
-	) expression;
+    ID (
+        ASSIGN
+        | ADD_ASSIGN
+        | SUB_ASSIGN
+        | MUL_ASSIGN
+        | DIV_ASSIGN
+    ) expression;
 
-expression: addSubExpr;
+/*
+* Expression rules with precedence
+*/
+
+expression: orExpr;
+
+orExpr: andExpr (OR andExpr)*;
+
+andExpr: notExpr (AND notExpr)*;
+
+notExpr: (NOT)? comparisonExpr;
+
+comparisonExpr: addSubExpr ( (EQ | NEQ | GTE | LTE | GT | LT) addSubExpr)*;
 
 addSubExpr: mulDivModExpr ( (ADD | SUB) mulDivModExpr)*;
 
@@ -39,8 +65,8 @@ array: LBRACK (expression (COMMA expression)*)? RBRACK;
 
 /*
 * ====================
- LEXER RULES
- (Order is important)
+  LEXER RULES
+  (Order is important)
  =====================
 */
 
@@ -56,25 +82,47 @@ MUL: '*';
 DIV: '/';
 MOD: '%';
 
+// --- Comparison Operators ---
+EQ: '==';
+NEQ: '!=';
+GTE: '>=';
+LTE: '<=';
+GT: '>';
+LT: '<';
+
+// --- Punctuation ---
 LPAREN: '(';
 RPAREN: ')';
 LBRACK: '[';
 RBRACK: ']';
 COMMA: ',';
+COLON: ':';
 
 // --- Keywords --- define before id
+IF: 'if';
+ELIF: 'elif';
+ELSE: 'else';
 BOOLEAN: 'True' | 'False';
+AND: 'and';
+OR: 'or';
+NOT: 'not';
 
+// --- Literals and Identifiers ---
 NUMBER: '-'? [0-9]+ ('.' [0-9]+)?;
 
-// Supports strings with "double" or 'single' quotes
 STRING:
-	'"' ('\\' . | ~["\\])* '"'
-	| '\'' ( '\\' . | ~['\\])* '\'';
+    '"' ('\\' . | ~["\\])* '"'
+    | '\'' ( '\\' . | ~['\\])* '\'';
 
-// --- Identifier/variable name --- 
 ID: [a-zA-Z_] [a-zA-Z_0-9]*;
 
-// --- Whitespace ---
+// --- Whitespace & Indentation ---
+
+// Allow INDENT to be 4 spaces OR a tab.
+// It MUST come before the general WS rule.
+INDENT: ('    ' | '\t');
+
 WS: [ \t]+ -> skip;
+
+// NEWLINE is no longer skipped.
 NEWLINE: ( '\r'? '\n');
