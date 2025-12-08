@@ -8,21 +8,15 @@ grammar PythonSubset;
 
 start: program;
 
-// program: (NEWLINE)* statement (NEWLINE+ statement)* (NEWLINE+)? EOF;
-
+// A program is one or more statements or blank lines 
 program: (statement | NEWLINE)+ EOF;
 
 statement:
     assignment_statement
     | if_statement
     | while_statement
-    | for_statement
-    | expression_statement;
+    | for_statement;
 
-expression_statement: expression;
-
-// 		   Add (NEWLINE*) before ELIF and ELSE to allow
-//         them to be on different lines from the preceding block.
 if_statement:
     IF expression COLON block
     (NEWLINE* INDENT* ELIF expression COLON block)*
@@ -36,8 +30,6 @@ for_statement:
 
 // Block rule expects a NEWLINE, then an INDENT token,
 // then one or more statements that are also prefixed by NEWLINE INDENT.
-// block: NEWLINE INDENT statement (NEWLINE INDENT statement)*;
-
 block: (NEWLINE INDENT+ statement)+;
 
 
@@ -91,6 +83,7 @@ array: LBRACK (expression (COMMA expression)*)? RBRACK;
 // Skip single line commments that start with "#"
 COMMENT: '#' ~[\r\n]* -> skip;
 
+// Skip multi-line comments enclosed in ''' '''
 MULTI_LINE_COMMENT: '\'\'\'' .*? '\'\'\'' -> skip;
 
 // --- Operators ---
@@ -146,19 +139,9 @@ ID: [a-zA-Z_] [a-zA-Z_0-9]*;
 
 // Allow INDENT to be 4 spaces OR a tab.
 // It MUST come before the general WS rule.
-// INDENT: ('    ' | '\t');
-
-// WS: [ \t]+ -> skip;
-
-// // NEWLINE is no longer skipped.
-// NEWLINE: ( '\r'? '\n');
-
-// CRITICAL FIX: INDENT matches a tab or 4 spaces.
-// We removed indentation characters from the WS rule below.
 INDENT: '\t' | '    ';
 
-// CRITICAL FIX: WS only matches simple spaces.
-// We removed \t from here so WS doesn't "eat" your indentation.
-WS: [ ]+ -> skip;
+// WS only matches simple spaces.
+WS: [ ]+ -> skip; 
 
 NEWLINE: ( '\r'? '\n' );
