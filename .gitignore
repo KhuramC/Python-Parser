@@ -7,3 +7,4 @@ __pycache__/
 *Listener.py
 *Parser.py
 *Visitor.py
+.DS_Store

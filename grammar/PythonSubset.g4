@@ -2,7 +2,7 @@ grammar PythonSubset;
 
 /*
 * ==============
-  PARSING RULES
+* PARSING RULES
 * ==============
 */
 
@@ -12,19 +12,22 @@ program: (NEWLINE)* statement (NEWLINE+ statement)* (NEWLINE+)? EOF;
 
 statement:
     assignment_statement
-    | if_statement;
+    | if_statement
+    | while_statement
+    | for_statement;
 
-// 		   Add (NEWLINE*) before ELIF and ELSE to allow
-//         them to be on different lines from the preceding block.
+// Note: ELIF/ELSE allow NEWLINE* to permit spacing between blocks
 if_statement:
     IF expression COLON block
     (NEWLINE* ELIF expression COLON block)*
     (NEWLINE* ELSE COLON block)?;
 
-// Block rule expects a NEWLINE, then an INDENT token,
-// then one or more statements that are also prefixed by NEWLINE INDENT.
-block: NEWLINE INDENT statement (NEWLINE INDENT statement)*;
+while_statement: WHILE expression COLON block;
 
+for_statement: FOR ID IN expression COLON block;
+
+// We accept one or more INDENT tokens to signify a block.
+block: NEWLINE INDENT+ statement (NEWLINE INDENT+ statement)*;
 
 assignment_statement:
     ID (
@@ -63,11 +66,13 @@ atom:
 
 array: LBRACK (expression (COMMA expression)*)? RBRACK;
 
+function_call: ID LPAREN (expression (COMMA expression)*)? RPAREN;
+
 /*
 * ====================
-  LEXER RULES
-  (Order is important)
- =====================
+*  LEXER RULES
+*  (Order is important)
+* ====================
 */
 
 // --- Operators ---
@@ -102,10 +107,14 @@ COLON: ':';
 IF: 'if';
 ELIF: 'elif';
 ELSE: 'else';
+WHILE: 'while';
+FOR: 'for';
+IN: 'in';
 BOOLEAN: 'True' | 'False';
 AND: 'and';
 OR: 'or';
 NOT: 'not';
+RANGE: 'range';
 
 // --- Literals and Identifiers ---
 NUMBER: '-'? [0-9]+ ('.' [0-9]+)?;
@@ -116,13 +125,17 @@ STRING:
 
 ID: [a-zA-Z_] [a-zA-Z_0-9]*;
 
+// --- Comments ---
+SINGLE_LINE_COMMENT: '#' ~[\r\n]* -> skip;
+MULTI_LINE_COMMENT: (
+    '\'\'\'' .*? '\'\'\''
+    | '"""' .*? '"""'
+    ) -> skip;
+
 // --- Whitespace & Indentation ---
 
-// Allow INDENT to be 4 spaces OR a tab.
-// It MUST come before the general WS rule.
-INDENT: ('    ' | '\t');
 
+INDENT: '    ' | '\t';
 WS: [ \t]+ -> skip;
 
-// NEWLINE is no longer skipped.
 NEWLINE: ( '\r'? '\n');
