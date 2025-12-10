@@ -139,7 +139,7 @@ ID: [a-zA-Z_] [a-zA-Z_0-9]*;
 
 // Allow INDENT to be 4 spaces OR a tab.
 // It MUST come before the general WS rule.
-INDENT: '\t' | '    ';
+INDENT: ('    ' | '\t');
 
 // WS only matches simple spaces.
 WS: [ ]+ -> skip; 
