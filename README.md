@@ -30,7 +30,8 @@ A basic Python 3.x Parser. TODO: Flesh out description
 
 ## Demo
 
-TODO: embed video demo into README
+[![Python Parser Demo](https://img.youtube.com/vi/wkbUzMx9BZY/maxresdefault.jpg)](https://youtu.be/wkbUzMx9BZY)
+
 
 ## Team Members
 
