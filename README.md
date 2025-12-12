@@ -68,6 +68,8 @@ You can run the parser against a Python test file (e.g., `test.py`).
 
 ## Demo
 
+**Click the photo below!!!**
+
 [![Python Parser Demo](https://img.youtube.com/vi/wkbUzMx9BZY/maxresdefault.jpg)](https://youtu.be/wkbUzMx9BZY)
 
 
