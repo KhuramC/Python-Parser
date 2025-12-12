@@ -1,32 +1,70 @@
-# Python Parser
+# Python Parser Project
 
-A basic Python 3.x Parser. TODO: Flesh out description
+This project implements a parser for a subset of the Python 3.x language using ANTLR 4. The parser utilizes a Context-Free Grammar (CFG) to process Python source code, handling Python's indentation-sensitive rules, and outputs a parse tree structure.
+
+
+## Supported Features
+This parser supports the following Python 3.x features:
+
+* **Arithmetic:** `+`, `-`, `*`, `/`, `%`
+* **Assignment:** `=`, `+=`, `-=`, `*=`, `/=`
+* **Control Flow:** `if`, `elif`, `else` blocks
+* **Loops:** `while` and `for` loops
+* **Conditionals:** `<`, `<=`, `>`, `>=`, `==`, `!=`, `and`, `or`, `not`
+* **Data Types:** Integers, Floats, Strings (`"`, `'`), and Booleans (`True`, `False`)
+* **Data Structures:** Arrays/Lists (e.g., `[1, 2, 3]`)
+* **Functions:** Function call parsing (e.g., `func(a, b)`)
+* **Comments:** Single line (`#`) and multi-line (`'''`)
+
 
 ## Requirements/Dependencies
 
-- [ANTLR](https://www.antlr.org/download/antlr-4.13.2-complete.jar)
-- Python 3.x
-- Python ANTLR runtime
-  - Can be downloaded with `pip install antlr4-python3-runtime`
-- ANTLR tools(for plotting the parser tree)
-  - Can be downloaded with `pip install antlr4-tools`
+- [ANTLR 4.13.2](https://www.antlr.org/download/antlr-4.13.2-complete.jar)
+- Python 3.x (e.g., 3.8+ is recommended)
+- **Runtime**
+  - Python runtime: `pip install antlr4-python3-runtime`
+  - *Or* C++ runtime (if using the executable version)
+- **Visualization**: `pip install antlr4-tools`
+
 
 ## How to Use
 
-1. Cd into the grammar directory
-1. Create parser using `antlr4 -Dlanguage=Python3 PythonSubset.g4`, or use the [PowerShell script](./create_parser.ps1).
+### 1. Build the Parser
+Generate the parser files using the provided scripts or the ANTLR command:
 
-### Unix / macOS usage
+* **Windows:**
+  ```powershell
+  ./create_parser.ps1
+  ```
 
-- Generate the parser files (Unix/macOS):
+* **Unix/macOS:**
+  ```bash
+  ./create_parsher.sh
+  ```
 
-```bash
-./create_parser.sh
-```
+* **Manual Command**
+  ```bash
+  antlr4 -Dlanguage=Cpp -o generated/ PythonSubset.g4
+  ```
+  
+### 2. Run the Parser
 
-1. Run `main.py` with `python main.py`
-1. A syntax tree should be printed as text.
-1. Alternatively, use the provided [PowerShell script](./parser_tree.ps1)
+You can run the parser against a Python test file (e.g., `test.py`).
+
+**Using the compiled Executable (Windows/Powershell):**
+  ```powershell
+  # Option A: Pipe content
+  Get-Content test.py | .\my_parser.exe
+  
+  # Option B: Use CMD wrapper
+  cmd /c ".\my_parser.exe < test.py"
+  ```
+
+**Using the Python Script:**
+  ```bash
+  python main.py input_file.py
+  ```
+
 
 ## Demo
 
