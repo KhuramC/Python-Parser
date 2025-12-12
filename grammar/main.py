@@ -1,18 +1,30 @@
 from antlr4 import InputStream, CommonTokenStream
 from pathlib import Path
+import sys
+import os
 
 from PythonSubsetLexer import PythonSubsetLexer
 from PythonSubsetParser import PythonSubsetParser
 
-deliverable_path = Path("../deliverables")
-
-# current_deliverable = deliverable_path / "project_deliverable_1.py"
-current_deliverable = deliverable_path / "project_deliverable_3.py"
+deliverable_path = os.path.join("../deliverables/project_deliverable_3.py")
 
 def main():
 
+    if len(sys.argv) > 1:
+        input_file_path = Path(sys.argv[1])
+        print(f"Parsing file: {input_file_path}")
 
-    stream = InputStream(current_deliverable.read_text())
+    else:
+        print("No file provided. Using default deliverable 3.")
+        input_file_path = deliverable_path
+
+    try:
+        input_stream = InputStream(input_file_path.read_text())
+    except FileNotFoundError:
+        print(f"Error: Could not find file {input_file_path}")
+        return
+
+    stream = InputStream(input_file_path.read_text())
     lexer = PythonSubsetLexer(stream)
     tokens = CommonTokenStream(lexer)
     parser = PythonSubsetParser(tokens)
