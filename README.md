@@ -44,25 +44,21 @@ Generate the parser files using the provided scripts or the ANTLR command:
 
 * **Manual Command**
   ```bash
-  antlr4 -Dlanguage=Cpp -o generated/ PythonSubset.g4
+  antlr4 -Dlanguage=Cpp -o generated/ ./grammar/PythonSubset.g4
   ```
   
 ### 2. Run the Parser
 
 You can run the parser against a Python test file (e.g., `test.py`).
 
-**Using the compiled Executable (Windows/Powershell):**
-  ```powershell
-  # Option A: Pipe content
-  Get-Content test.py | .\my_parser.exe
-  
-  # Option B: Use CMD wrapper
-  cmd /c ".\my_parser.exe < test.py"
+  ```bash
+  python .\grammar\main.py input_file.py
   ```
 
-**Using the Python Script:**
+### 3. Visualization
+
   ```bash
-  python main.py input_file.py
+  antlr4-parse .\grammar\PythonSubset.g4 start -gui input_file.py
   ```
 
 
