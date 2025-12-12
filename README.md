@@ -55,6 +55,8 @@ You can run the parser against a Python test file (e.g., `test.py`).
   python .\grammar\main.py input_file.py
   ```
 
+*Hint: Try `simple.py`.*
+
 ### 3. Visualization
 
   ```bash
